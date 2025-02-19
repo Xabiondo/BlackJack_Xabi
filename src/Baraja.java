@@ -113,6 +113,7 @@ public class Baraja {
                 }else {
                     System.out.println("Has perdido");
                     partidaEnJuego = false;
+                    return;
                 }
 
             }
@@ -124,33 +125,52 @@ public class Baraja {
             baraja.remove(sorteo);
 
 
-        }
+        } else {
+            System.out.println("el dealer no pide mas cartas");
+            return; }
+
+
+
         if (contadorDealer > 21 ){
             System.out.println("el dealer ha perdido");
             partidaEnJuego = false;
+
+
 
         }
 
 
     }
 
+
     public void ronda(){
         repartirCartas();
+        int decision = 0;
         do {
             calcularPuntuacion();
             mostrarManos();
             System.out.println("Quieres pedir carta , si quieres pedir pon 1 , si no otra cosa");
             Scanner sc = new Scanner(System.in);
-            int decision = sc.nextInt();
-            if (decision == 1) {
-                darCarta();
-                mostrarManos();
-            }
+
+
+            do {
+                 decision = sc.nextInt();
+                if (decision == 1) {
+                    darCarta();
+                    calcularPuntuacion();
+                    mostrarManos();
+                    revisarRonda();
+                }
+
+            }while (decision ==1);
+
             revisarRonda();
+            calcularPuntuacion();
+            mostrarManos();
 
 
 
-        }while (partidaEnJuego == true);
+        }while (partidaEnJuego == true && decision != 1);
     }
 
 
